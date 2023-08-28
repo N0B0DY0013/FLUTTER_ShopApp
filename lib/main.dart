@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 import 'screens/product_overview_screen.dart';
 import 'screens/product_detail_screen.dart';
 import 'screens/cart_screen.dart';
+import 'screens/order_screen.dart';
 
 import 'providers/product_list.dart';
 import 'providers/cart.dart';
+import 'providers/order.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (ctx) {
           return Cart();                        //Cart data listeners ....
+        }),
+        ChangeNotifierProvider(create: (ctx) { //Order data listeners ....
+          return Order();
         })
       ],
       child: MaterialApp(
@@ -40,6 +45,9 @@ class MyApp extends StatelessWidget {
           },
           CartScreen.routeName: (ctx) {
             return const CartScreen();
+          },
+          OrderScreen.routeName: (ctx) {
+            return const OrderScreen();
           }
         },
         //title: "Shop App",

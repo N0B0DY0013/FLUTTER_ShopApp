@@ -22,8 +22,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context,
-        listen: false); //Provider -> Class-wide data management way ...
+    
+    final product = Provider.of<Product>(context); //Provider -> Class-wide data management way ...
     //final cart = Provider.of<Cart>(context, listen: false);
 
     return ClipRRect(

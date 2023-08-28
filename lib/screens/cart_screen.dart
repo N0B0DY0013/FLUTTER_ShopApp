@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
+import '../providers/order.dart';
 
 import '../widgets/cart_tiles.dart';
 
 class CartScreen extends StatelessWidget {
+
   const CartScreen({super.key});
 
   static const routeName = "/cart";
@@ -14,7 +16,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cart"),
+        title: const Text("Cart"),
       ),
       body: Column(
         children: [
@@ -38,7 +40,7 @@ class CartScreen extends StatelessWidget {
                       return Chip(
                         backgroundColor: Colors.black87,
                         label: Text(
-                          "\$ ${cart.cartTotal}",
+                          "\$ ${cart.cartTotal.toStringAsFixed(2)}",
                           style: const TextStyle(
                             color: Colors.white,
                           ),
@@ -48,7 +50,14 @@ class CartScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Order>(context, listen: false).addOrder(
+                        Provider.of<Cart>(context, listen: false).cart_list.values.toList(),
+                        Provider.of<Cart>(context, listen: false).cartTotal,
+                      );
+
+                      Provider.of<Cart>(context, listen: false).clearCart();
+                    },
                     child: const Text("Checkout"),
                   ),
                 ],
@@ -67,7 +76,8 @@ class CartScreen extends StatelessWidget {
                   itemCount: cart.cartCount,
                   itemBuilder: (ctx, i) {
                     return CartTiles(
-                      id: cart.cart_list.values.elementAt(i).id,
+                      CartKey: cart.cart_list.keys.elementAt(i),
+                      CartItemId: cart.cart_list.values.elementAt(i).id,
                       price: cart.cart_list.values.elementAt(i).price,
                       quantity: cart.cart_list.values.elementAt(i).quantity,
                       title: cart.cart_list.values.elementAt(i).title,
