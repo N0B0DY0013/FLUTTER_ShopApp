@@ -22,7 +22,7 @@ import './providers/product.dart';
     title: "Pringles Original",
     description: "Stackable potato crisps with a unique saddle shape.",
     price: 1.79,
-    imageUrl: "https://builtamart.com/cdn/shop/products/566.jpg?v=1686595279"
+    imageUrl: "https://images.kglobalservices.com/www.pringles.com.uk/en_gb/product/product_6598149/prod_img-6598525_05053990138722_a1n1.png"
   ),
   Product(
     id: "p4",
@@ -211,7 +211,7 @@ import './providers/product.dart';
     title: "Lays Cheddar & Sour Cream",
     description: "Potato chips with a creamy cheddar and tangy sour cream flavor.",
     price: 1.99,
-    imageUrl: "https://builtamart.com/cdn/shop/products/203-003-20-2023-170323-903_d55f6f98-0bea-42aa-bef5-e0d7e6c8d8e6.jpg?v=1689406930"
+    imageUrl: "https://images.freshop.com/8148053/09c4323a658147483c50ab4844bc9a04_large.png"
   ),
   Product(
     id: "p31",

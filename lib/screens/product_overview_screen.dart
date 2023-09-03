@@ -30,7 +30,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shop App"),
+        title: const Text("Chip Shop"),
         actions: <Widget>[
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),

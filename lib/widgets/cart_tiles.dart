@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
 
+import 'cart_qty_update.dart';
+
 class CartTiles extends StatelessWidget {
   final String CartKey;
   final String CartItemId;
@@ -49,25 +51,36 @@ class CartTiles extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.black87,
-              foregroundColor: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: FittedBox(
-                  child: Text(
-                    "\$ $price",
+          child: Column(
+            children: [
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.black87,
+                  foregroundColor: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: FittedBox(
+                      child: Text(
+                        "\$ $price",
+                      ),
+                    ),
                   ),
                 ),
+                title: Text(title),
+                subtitle: Text("\$ ${(quantity * price).toStringAsFixed(2)}"),
+                trailing: Text(
+                  "$quantity x",
+                  style: TextStyle(fontSize: 18, color: Colors.orange[800]),
+                ),
               ),
-            ),
-            title: Text(title),
-            subtitle: Text("\$ ${(quantity * price)}"),
-            trailing: Text(
-              "$quantity x",
-              style: TextStyle(fontSize: 18, color: Colors.orange[800]),
-            ),
+              CartQtyUpdate(
+                cartKey: CartKey,
+                quantity: quantity,
+                price:  price,
+                title: title,
+
+              ),
+            ],
           ),
         ),
       ),
