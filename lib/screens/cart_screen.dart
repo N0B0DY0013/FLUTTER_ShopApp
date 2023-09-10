@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/providers/product_list.dart';
 
 import '../providers/cart.dart';
 import '../providers/order.dart';
+import '../providers/product_list.dart';
 
 import '../widgets/cart_tiles.dart';
 
@@ -81,6 +83,7 @@ class CartScreen extends StatelessWidget {
                       price: cart.cart_list.values.elementAt(i).price,
                       quantity: cart.cart_list.values.elementAt(i).quantity,
                       title: cart.cart_list.values.elementAt(i).title,
+                      imageUrl: ProductList().getProductByID(cart.cart_list.keys.elementAt(i)).imageUrl,
                     );
                   },
                 );

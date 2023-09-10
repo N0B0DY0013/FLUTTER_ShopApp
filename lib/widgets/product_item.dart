@@ -22,9 +22,38 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    final product = Provider.of<Product>(context); //Provider -> Class-wide data management way ...
+    final product = Provider.of<Product>(
+        context); //Provider -> Class-wide data management way ...
     //final cart = Provider.of<Cart>(context, listen: false);
+
+    void add_product_to_cart(Cart cart) {
+
+      cart.addCartItem(
+        product.id,
+        product.title,
+        product.price,
+      );
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("${product.title} has been added to cart!"),
+          duration: const Duration(seconds: 2),
+          action: SnackBarAction(
+            label: "UNDO",
+            onPressed: () {
+              final product_count = cart.productCartCount(product.id);
+              if( product_count > 1) {
+                cart.updateCartItemQty(product.id, product_count - 1);
+              } else {
+                cart.deleteCartItem(product.id);
+              }
+            },
+          ),
+        ),
+      );
+    }
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -49,26 +78,17 @@ class ProductItem extends StatelessWidget {
                 );
               },
             ),
-            // trailing: IconButton(
-            //   icon: const Icon(
-            //     Icons.shopping_cart,
-            //   ),
-            //   onPressed: () {
-
-            //     cart.addCartItem(product.id, product.title, product.price);
-
-            //   },
-            // )
             trailing: Consumer<Cart>(
               builder: (ctx, cart, _) {
                 return cart.productCartCount(product.id) == 0
                     ? IconButton(
                         onPressed: () {
-                          cart.addCartItem(
-                            product.id,
-                            product.title,
-                            product.price,
-                          );
+                          // cart.addCartItem(
+                          //   product.id,
+                          //   product.title,
+                          //   product.price,
+                          // );
+                          add_product_to_cart(cart);
                         },
                         icon: const Icon(Icons.shopping_cart),
                       )
@@ -80,11 +100,12 @@ class ProductItem extends StatelessWidget {
                             Icons.shopping_cart,
                           ),
                           onPressed: () {
-                            cart.addCartItem(
-                              product.id,
-                              product.title,
-                              product.price,
-                            );
+                            // cart.addCartItem(
+                            //   product.id,
+                            //   product.title,
+                            //   product.price,
+                            // );
+                            add_product_to_cart(cart);
                           },
                         ),
                       );

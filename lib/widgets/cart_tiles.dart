@@ -11,6 +11,7 @@ class CartTiles extends StatelessWidget {
   final double price;
   final int quantity;
   final String title;
+  final String imageUrl;
 
   const CartTiles({
     super.key,
@@ -19,6 +20,7 @@ class CartTiles extends StatelessWidget {
     required this.price,
     required this.quantity,
     required this.title,
+    required this.imageUrl,
   });
 
   @override
@@ -26,6 +28,32 @@ class CartTiles extends StatelessWidget {
     return Dismissible(
       key: ValueKey(CartItemId),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text("Are you sure?"),
+              content:
+                  const Text("Do you want to remove the item from the Cart?"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text("No"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: const Text("Yes"),
+                ),
+              ],
+            );
+          },
+        );
+      },
       background: Container(
         color: Colors.grey[300],
         alignment: Alignment.centerRight,
@@ -54,31 +82,57 @@ class CartTiles extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.black87,
-                  foregroundColor: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: FittedBox(
-                      child: Text(
-                        "\$ $price",
-                      ),
+                leading: Column(
+                  children: [
+                    CircleAvatar(
+                      // backgroundColor: Colors.black87,
+                      // foregroundColor: Colors.white,
+                      backgroundImage: NetworkImage(imageUrl),
+                      // child: Padding(
+                      //   padding: const EdgeInsets.all(5),
+                      //   child: FittedBox(
+                      //     child: Text(
+                      //       "\$ $price",
+                      //     ),
+                      //   ),
+                      // ),
                     ),
+                    Text(
+                      "\$ ${price.toStringAsFixed(2)}",
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                  ],
+                ),
+                title: Text(
+                  title,
+                  style: const TextStyle(fontSize: 16),
+                ),
+                subtitle: Container(
+                  margin: const EdgeInsets.only(
+                    top: 2,
+                  ),
+                  child: Text(
+                    "\$ ${(quantity * price).toStringAsFixed(2)}",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.orange[800],
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                title: Text(title),
-                subtitle: Text("\$ ${(quantity * price).toStringAsFixed(2)}"),
                 trailing: Text(
                   "$quantity x",
-                  style: TextStyle(fontSize: 18, color: Colors.orange[800]),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.orange[800],
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               CartQtyUpdate(
                 cartKey: CartKey,
                 quantity: quantity,
-                price:  price,
+                price: price,
                 title: title,
-
               ),
             ],
           ),
