@@ -4,7 +4,7 @@ import 'package:shop_app/providers/product_list.dart';
 
 import '../providers/cart.dart';
 import '../providers/order.dart';
-import '../providers/product_list.dart';
+//import '../providers/product_list.dart';
 
 import '../widgets/cart_tiles.dart';
 

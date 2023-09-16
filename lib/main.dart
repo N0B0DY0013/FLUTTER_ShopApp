@@ -6,6 +6,7 @@ import 'screens/product_detail_screen.dart';
 import 'screens/cart_screen.dart';
 import 'screens/order_screen.dart';
 import 'screens/user_product_screen.dart';
+import 'screens/edit_product_screen.dart';
 
 import 'providers/product_list.dart';
 import 'providers/cart.dart';
@@ -52,6 +53,9 @@ class MyApp extends StatelessWidget {
           },
           UserProductScreen.routeName: (ctx) {
             return const UserProductScreen();
+          },
+          EditProduct.routeName: (ctx) {
+            return const EditProduct();
           }
         },
         //title: "Shop App",

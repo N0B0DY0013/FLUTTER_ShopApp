@@ -103,9 +103,15 @@ class CartTiles extends StatelessWidget {
                     ),
                   ],
                 ),
-                title: Text(
-                  title,
-                  style: const TextStyle(fontSize: 16),
+                title: Container(
+                  margin: const EdgeInsets.only(bottom: 17),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 subtitle: Container(
                   margin: const EdgeInsets.only(
