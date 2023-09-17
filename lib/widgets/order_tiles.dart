@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
 import 'dart:math';
 
 import '../models/order_item.dart';
+
+import '../providers/product_list.dart';
 
 class OrderTiles extends StatefulWidget {
   final OrderItem order;
@@ -26,7 +30,7 @@ class _OrderTilesState extends State<OrderTiles> {
       child: Column(
         children: [
           ListTile(
-            title: Text("\$ ${widget.order.amount}"),
+            title: Text("\$ ${widget.order.amount.toStringAsFixed(2)}"),
             subtitle: Text(
               DateFormat("yyyy-MM-dd hh:mm").format(widget.order.timeStamp),
             ),
@@ -40,8 +44,9 @@ class _OrderTilesState extends State<OrderTiles> {
             ),
           ),
           if (_isExpanded)
+            
             Container(
-              height: min(widget.order.products.length * 50.0 + 20, 100.0),
+              height: min(widget.order.products.length * 45.0 + 20.0, 160.0),
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: ListView.builder(
@@ -52,18 +57,36 @@ class _OrderTilesState extends State<OrderTiles> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            widget.order.products[idx].title,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            //width: 50,
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  Provider.of<ProductList>(context, listen: false)
+                                      .getProductByID(
+                                          widget.order.products[idx].prodId)
+                                      .imageUrl),
                             ),
                           ),
-                          Text(
-                            "${widget.order.products[idx].quantity} x \$ ${widget.order.products[idx].price}",
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
+                          Container(
+                            width: 300,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  widget.order.products[idx].title,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  "${widget.order.products[idx].quantity} x \$ ${widget.order.products[idx].price}",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
                             ),
                           )
                         ],

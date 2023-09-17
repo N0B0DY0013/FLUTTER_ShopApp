@@ -8,6 +8,7 @@ import 'cart_qty_update.dart';
 class CartTiles extends StatelessWidget {
   final String CartKey;
   final String CartItemId;
+  final String productId;
   final double price;
   final int quantity;
   final String title;
@@ -17,6 +18,7 @@ class CartTiles extends StatelessWidget {
     super.key,
     required this.CartKey,
     required this.CartItemId,
+    required this.productId,
     required this.price,
     required this.quantity,
     required this.title,
@@ -37,13 +39,17 @@ class CartTiles extends StatelessWidget {
               content:
                   const Text("Do you want to remove the item from the Cart?"),
               actions: [
-                TextButton(
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.orange[900],
+                    foregroundColor: Colors.white,
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop(false);
                   },
                   child: const Text("No"),
                 ),
-                TextButton(
+                OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
@@ -139,6 +145,7 @@ class CartTiles extends StatelessWidget {
                 quantity: quantity,
                 price: price,
                 title: title,
+                productId: productId,
               ),
             ],
           ),

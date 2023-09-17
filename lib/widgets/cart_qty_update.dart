@@ -5,6 +5,7 @@ import '../providers/cart.dart';
 
 class CartQtyUpdate extends StatefulWidget {
   final String cartKey;
+  final productId;
   final int quantity;
   final String title;
   final double price;
@@ -12,6 +13,7 @@ class CartQtyUpdate extends StatefulWidget {
   const CartQtyUpdate({
     super.key,
     required this.cartKey,
+    required this.productId,
     required this.quantity,
     required this.title,
     required this.price,
@@ -56,6 +58,7 @@ class _CartQtyUpdateState extends State<CartQtyUpdate> {
     Provider.of<Cart>(context, listen: false).updateCartItemQty(
       widget.cartKey,
       _currQty,
+      widget.productId,
     );
 
     setState(() {

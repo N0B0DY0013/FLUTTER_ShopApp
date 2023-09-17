@@ -47,16 +47,21 @@ class UserProductItem extends StatelessWidget {
                       content:
                           const Text("Do you want to remove this product?"),
                       actions: [
-                        TextButton(
+                        OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.orange[900],
+                            foregroundColor: Colors.white,
+                          ),
                           onPressed: () {
                             Navigator.of(context).pop(false);
                           },
                           child: const Text("No"),
                         ),
-                        TextButton(
+                        OutlinedButton(
                           onPressed: () {
                             Navigator.of(context).pop(true);
-                            Provider.of<ProductList>(context, listen: false).deleteProduct(productId);
+                            Provider.of<ProductList>(context, listen: false)
+                                .deleteProduct(productId);
                           },
                           child: const Text("Yes"),
                         ),

@@ -27,7 +27,6 @@ class ProductItem extends StatelessWidget {
     //final cart = Provider.of<Cart>(context, listen: false);
 
     void add_product_to_cart(Cart cart) {
-
       cart.addCartItem(
         product.id,
         product.title,
@@ -35,7 +34,7 @@ class ProductItem extends StatelessWidget {
       );
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("${product.title} has been added to cart!"),
@@ -44,8 +43,12 @@ class ProductItem extends StatelessWidget {
             label: "UNDO",
             onPressed: () {
               final product_count = cart.productCartCount(product.id);
-              if( product_count > 1) {
-                cart.updateCartItemQty(product.id, product_count - 1);
+              if (product_count > 1) {
+                cart.updateCartItemQty(
+                  product.id,
+                  product_count - 1,
+                  product.id,
+                );
               } else {
                 cart.deleteCartItem(product.id);
               }

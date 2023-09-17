@@ -54,6 +54,8 @@ class _EditProductState extends State<EditProduct> {
             description: "",
             price: 0.00,
             imageUrl: "");
+
+        _imgURLController.text = "https://i.pinimg.com/originals/cf/0b/be/cf0bbe0e35bc5f92b10045852f87bb11.jpg";
       }
     }
     _isInit = false;
@@ -116,13 +118,17 @@ class _EditProductState extends State<EditProduct> {
             title: const Text("Are you sure?"),
             content:  Text(page_args["type"] == "new" ? "Do you want to add this new product?": "Do you want to update this existing product?"),
             actions: [
-              TextButton(
+              OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
                 child: const Text("No"),
               ),
-              TextButton(
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.orange[900],
+                    foregroundColor: Colors.white,
+                  ),
                 onPressed: () {
                   Navigator.of(context).pop(true);
                   if (page_args["type"] == "new") {
@@ -149,7 +155,7 @@ class _EditProductState extends State<EditProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Product"),
+        title:  Text( (page_args["type"] == "new") ? "Add New Product": "Edit Product"),
         actions: [
           IconButton(
             onPressed: _saveForm,
