@@ -51,6 +51,9 @@ class ProductList with ChangeNotifier {
 
       notifyListeners();
 
+    }).catchError((error) {
+        //print(error);
+        throw error;
     });
 
     //_productList.add(newProduct);

@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.deepOrange,
+          useMaterial3: false,
         ),
         routes: {
           ProductDetailScreen.routeName: (ctx) {

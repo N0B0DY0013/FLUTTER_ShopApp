@@ -252,7 +252,7 @@ import './providers/product.dart';
     title: "Popchips Sour Cream & Onion",
     description: "Popped potato chips with a tangy sour cream and onion seasoning.",
     price: 2.29,
-    imageUrl: "https://shop.healthyoptions.com.ph/cdn/shop/products/082666500704_01.jpg?v=1627354470"
+    imageUrl: "https://popchips.com/cdn/shop/files/POP-0.8oz-SourCreamOnion-80850-10-3D-FRONT_1200x.png?v=1701879204"
   ),
   Product(
     id: "p37",

@@ -122,30 +122,60 @@ class _EditProductState extends State<EditProduct> {
                 ? "Do you want to add this new product?"
                 : "Do you want to update this existing product?"),
             actions: [
+              //No
               OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
                 child: const Text("No"),
               ),
+              //Yes
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.orange[900],
                   foregroundColor: Colors.white,
                 ),
                 onPressed: () {
+
                   setState(() {
                     _isLoading = true;
                   });
-                  Navigator.of(context).pop(true);
+
+                  Navigator.pop(context);
+
                   if (page_args["type"] == "new") {
                     Provider.of<ProductList>(context, listen: false)
                         .insertProduct(_edittedProduct)
                         .then((_) {
-                      setState(() {
-                        _isLoading = false;
-                      });
-                      Navigator.pop(context);
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              Navigator.pop(context);
+                        }).catchError((error) {
+                              showDialog(
+                                  context: context,
+                                  builder: (ctx2) {
+                                    return AlertDialog(
+                                      title: const Text("An error occured."),
+                                      content: Text(
+                                          "Something went wrong: ${error.toString()}"),
+                                      actions: [
+                                        OutlinedButton(
+                                          style: OutlinedButton.styleFrom(
+                                            backgroundColor: Colors.orange[900],
+                                            foregroundColor: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Ok"),
+                                        )
+                                      ],
+                                    );
+                                  });
                     });
                   } else {
                     Provider.of<ProductList>(context, listen: false)
