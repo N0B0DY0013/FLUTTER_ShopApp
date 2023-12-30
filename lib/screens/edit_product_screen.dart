@@ -135,8 +135,7 @@ class _EditProductState extends State<EditProduct> {
                   backgroundColor: Colors.orange[900],
                   foregroundColor: Colors.white,
                 ),
-                onPressed: () {
-
+                onPressed: () async {
                   setState(() {
                     _isLoading = true;
                   });
@@ -144,39 +143,42 @@ class _EditProductState extends State<EditProduct> {
                   Navigator.pop(context);
 
                   if (page_args["type"] == "new") {
-                    Provider.of<ProductList>(context, listen: false)
-                        .insertProduct(_edittedProduct)
-                        .then((_) {
-                              setState(() {
-                                _isLoading = false;
-                              });
-                              Navigator.pop(context);
-                        }).catchError((error) {
-                              showDialog(
-                                  context: context,
-                                  builder: (ctx2) {
-                                    return AlertDialog(
-                                      title: const Text("An error occured."),
-                                      content: Text(
-                                          "Something went wrong: ${error.toString()}"),
-                                      actions: [
-                                        OutlinedButton(
-                                          style: OutlinedButton.styleFrom(
-                                            backgroundColor: Colors.orange[900],
-                                            foregroundColor: Colors.white,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Ok"),
-                                        )
-                                      ],
-                                    );
-                                  });
-                    });
+                    try {
+                      await Provider.of<ProductList>(context, listen: false).insertProduct(_edittedProduct);
+                      //.then((_) {
+                      setState(() {
+                        _isLoading = false;
+                      });
+                      context.mounted ? Navigator.pop(context): null;
+                    } catch (error) {
+                      showDialog(
+                          context: context.mounted ? context : context,
+                          builder: (ctx2) {
+                            return AlertDialog(
+                              title: const Text("An error occured."),
+                              content: Text(
+                                  "Something went wrong: ${error.toString()}"),
+                              actions: [
+                                OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    backgroundColor: Colors.orange[900],
+                                    foregroundColor: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Ok"),
+                                )
+                              ],
+                            );
+                          },);
+                    }
+
+                    //}).catchError((error) {
+                    //});
                   } else {
                     Provider.of<ProductList>(context, listen: false)
                         .updateProduct(_edittedProduct);

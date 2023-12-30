@@ -10,7 +10,8 @@ import '../dummy_data.dart';
 
 class ProductList with ChangeNotifier {
   final List<Product> _productList = DUMMY_DATA;
-  final base_uri = "flutter-shop-app-3647c-default-rtdb.asia-southeast1.firebasedatabase.app";
+  final base_uri =
+      "flutter-shop-app-3647c-default-rtdb.asia-southeast1.firebasedatabase.app";
 
   List<Product> get productList {
     //returns a copy of the '_productList'
@@ -29,36 +30,38 @@ class ProductList with ChangeNotifier {
     });
   }
 
-  Future insertProduct(Product newProduct) {
-
-    return http.post(
-      Uri.https(base_uri, "/products.json"),
-      body: json.encode({
-        'title': newProduct.title,
-        'description': newProduct.description,
-        'imageUrl': newProduct.imageUrl,
-        'price': newProduct.price,
-        'isFavorite': newProduct.isFavorite
-      }),
-    ).then((response) {
-      //newProduct.id = value.toString();
+  Future insertProduct(Product newProduct) async {
+    try {
+      final response = await http.post(Uri.https(base_uri, "/products.json"),
+                                       body: json.encode({'title': newProduct.title,
+                                                          'description': newProduct.description,
+                                                          'imageUrl': newProduct.imageUrl,
+                                                          'price': newProduct.price,
+                                                          'isFavorite': newProduct.isFavorite
+                                                         },),
+                                      ); //.then((response) {
+                                         //newProduct.id = value.toString();
       _productList.add(Product(
           id: jsonDecode(response.body)["name"],
           title: newProduct.title,
           description: newProduct.description,
           price: newProduct.price,
-          imageUrl: newProduct.imageUrl));
+          imageUrl: newProduct.imageUrl),);
 
       notifyListeners();
+      
+    } catch (error) {
+      //}).catchError((error) {
+    //print(error);
+      //throw error;
+    //});
+      throw error;
 
-    }).catchError((error) {
-        //print(error);
-        throw error;
-    });
+    }
 
+    
     //_productList.add(newProduct);
     //notifyListeners();
-    
   }
 
   void updateProduct(Product existingProduct) {
